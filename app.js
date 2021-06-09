@@ -9,6 +9,7 @@ const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -93,7 +94,11 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // we need body in this route as raw and json hence we define it before parsing body as json(express.json())
-app.post('/webhook-checkout', express.raw(), bookingController.webHookCheckout);
+app.post(
+  '/webhook-checkout',
+  bodyParser.raw({ type: 'application/json' }),
+  bookingController.webHookCheckout
+);
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
