@@ -19,7 +19,11 @@ export const login = async (email, password) => {
       }, 1500);
     }
   } catch (err) {
-    showAlert('error', err.response.data);
+    // console.log(err);
+    // console.log(err.response);
+    // console.log(err.response.data);
+    // console.log(err.response.data.message);
+    showAlert('error', err.response.data.message);
   }
 };
 
